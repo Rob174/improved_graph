@@ -1,4 +1,4 @@
-from src.layers.base_node import G_Node
+from .base_node import G_Node
 from tensorflow.keras.layers import Input,Conv2D,Dense,\
     MaxPooling2D,AveragePooling2D,\
     Concatenate,Dropout,Flatten
