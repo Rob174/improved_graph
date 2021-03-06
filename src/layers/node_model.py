@@ -1,4 +1,4 @@
-from src.layers.base_node import G_Node
+from scripts_personnels.src.models.layers.improved_graph.src.layers.base_node import G_Node
 from tensorflow.keras import Model
 import graphviz
 
