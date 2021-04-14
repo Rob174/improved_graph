@@ -1,43 +1,57 @@
 from scripts_personnels.src.models.layers.improved_graph.src.layers.base_node import G_Node
-from tensorflow.keras.layers import Input,Conv2D,Dense,\
-    MaxPooling2D,AveragePooling2D,\
-    Concatenate,Dropout,Flatten
+import tensorflow.keras.layers as layers
 
 
-class G_Conv2D(G_Node):
+class Conv2D(G_Node):
     def __init__(self, **kargs):
         super().__init__({"color":"blue"},**kargs)
-        self.keras_layer = Conv2D(**kargs)
-class G_Dense(G_Node):
+        self.keras_layer = layers.Conv2D(**kargs)
+class Dense(G_Node):
     def __init__(self, **kargs):
         super().__init__({"color":"blue"},**kargs)
-        self.keras_layer = Dense(**kargs)
-class G_Input(G_Node):
+        self.keras_layer = layers.Dense(**kargs)
+class Input(G_Node):
     def __init__(self, **kargs):
         super().__init__({"color":"yellow"},**kargs)
-        self.keras_layer = Input(**kargs)
+        self.keras_layer = layers.Input(**kargs)
         self.tenseur = self.keras_layer
-class G_MaxPooling2D(G_Node):
+class MaxPooling2D(G_Node):
     def __init__(self, **kargs):
         super().__init__({"color":"red"},**kargs)
-        self.keras_layer = MaxPooling2D(**kargs)
-class G_AveragePooling2D(G_Node):
+        self.keras_layer = layers.MaxPooling2D(**kargs)
+class AveragePooling2D(G_Node):
     def __init__(self, **kargs):
         super().__init__({"color":"orange"},**kargs)
-        self.keras_layer = AveragePooling2D(**kargs)
-class G_Dropout(G_Node):
+        self.keras_layer = layers.AveragePooling2D(**kargs)
+class GlobalAveragePooling2D(G_Node):
     def __init__(self, **kargs):
-        super().__init__({"color":"orange"},**kargs)
-        self.keras_layer = Dropout(**kargs)
-class G_Flatten(G_Node):
+        super().__init__({"color":"yellow"},**kargs)
+        self.keras_layer = layers.GlobalAveragePooling2D(**kargs)
+class BatchNormalization(G_Node):
     def __init__(self, **kargs):
-        super().__init__({"color":"orange"},**kargs)
-        self.keras_layer = Flatten(**kargs)
-
-class G_Concatenate(G_Node):
+        super().__init__({"color":"brown"},**kargs)
+        self.keras_layer = layers.BatchNormalization(**kargs)
+class Activation(G_Node):
+    def __init__(self, **kargs):
+        super().__init__({"color":"green"},**kargs)
+        self.keras_layer = layers.Activation(**kargs)
+class SeparableConv2D(G_Node):
+    def __init__(self, **kargs):
+        super().__init__({"color":"blue"},**kargs)
+        self.keras_layer = layers.SeparableConv2D(**kargs)
+class Dropout(G_Node):
     def __init__(self, **kargs):
         super().__init__({"color":"black"},**kargs)
-        self.keras_layer = Concatenate(**kargs)
+        self.keras_layer = layers.Dropout(**kargs)
+class Flatten(G_Node):
+    def __init__(self, **kargs):
+        super().__init__({"color":"black"},**kargs)
+        self.keras_layer = layers.Flatten(**kargs)
+
+class Concatenate(G_Node):
+    def __init__(self, **kargs):
+        super().__init__({"color":"black"},**kargs)
+        self.keras_layer = layers.Concatenate(**kargs)
     def __call__(self, input_nodes):
         if type(input_nodes) != list:
             raise Exception("A Concatenate layer should be called on a list of inputs")
@@ -56,3 +70,8 @@ class G_Concatenate(G_Node):
         parent_graph.node(str(self.id), label=label, shape="record", **self.graphviz_params)
         self.link(parent_graph)
         self.graph_done = True
+
+class Add(Concatenate):
+    def __init__(self, **kargs):
+        super().__init__({"color":"black"},**kargs)
+        self.keras_layer = layers.Add(**kargs)
