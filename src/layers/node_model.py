@@ -1,14 +1,14 @@
 from scripts_personnels.src.models.layers.improved_graph.src.layers.base_node import G_Node
-from tensorflow.keras import Model
+import tensorflow.keras as keras
 import graphviz
 
-class G_Model(G_Node):
+class Model(G_Node):
     def __init__(self,inputs,outputs,name,color="white"):
         super().__init__({"style":"filled","fillcolor":color,"peripheries":str(0)},**{"inputs":inputs,"outputs":outputs})
         self.inputs_used = 0
         inputs = list(map(lambda x:x. tenseur,inputs))
         outputs = list(map(lambda x:x. tenseur,outputs))
-        self.keras_layer = Model(inputs=inputs,outputs=outputs)
+        self.keras_layer = keras.Model(inputs=inputs,outputs=outputs)
         self.graph = None
     def __call__(self, inputs):
         for input in inputs:
