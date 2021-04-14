@@ -1,4 +1,4 @@
-from scripts_personnels.src.models.layers.improved_graph.src.layers.base_node import G_Node
+from IA.improved_graph.src.layers.base_node import G_Node
 import tensorflow.keras as keras
 import graphviz
 
@@ -6,8 +6,8 @@ class Model(G_Node):
     def __init__(self,inputs,outputs,name,color="white"):
         super().__init__({"style":"filled","fillcolor":color,"peripheries":str(0)},**{"inputs":inputs,"outputs":outputs})
         self.inputs_used = 0
-        inputs = list(map(lambda x:x. tenseur,inputs))
-        outputs = list(map(lambda x:x. tenseur,outputs))
+        inputs = list(map(lambda x:x.tenseur,inputs))
+        outputs = list(map(lambda x:x.tenseur,outputs))
         self.keras_layer = keras.Model(inputs=inputs,outputs=outputs)
         self.graph = None
     def __call__(self, inputs):
@@ -30,6 +30,12 @@ class Model(G_Node):
         self.build(graph)
 
         graph.render(out_path)
+    def save(self,out_path):
+        graph = graphviz.Digraph(name="Main", format="dot")
+        for x in self.layer_params["outputs"]:
+            x.output_node = True
+        self.build(graph)
+        graph.save(out_path)
     def build(self,parent_graph):
         with parent_graph.subgraph(name='cluster_'+str(self.id)) as c:
             for k,v in self.graphviz_params.items():

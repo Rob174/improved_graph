@@ -1,4 +1,6 @@
-
+import sys
+import os
+sys.path.append(os.path.realpath(__file__))
 class G_Node:
     id = 0
     def __init__(self,graphviz_params,**layer_params):

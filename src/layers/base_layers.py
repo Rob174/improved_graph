@@ -1,4 +1,4 @@
-from .base_node import G_Node
+from IA.improved_graph.src.layers.base_node import G_Node
 import tensorflow.keras.layers as layers
 
 
@@ -97,5 +97,5 @@ class Concatenate(G_Node):
 
 class Add(Concatenate):
     def __init__(self, **kargs):
-        super().__init__({"color": "black"}, **kargs)
+        G_Node.__init__(self,{"color": "black"}, **kargs)
         self.keras_layer = layers.Add(**kargs)
